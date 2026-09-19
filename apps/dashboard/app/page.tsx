@@ -40,7 +40,12 @@ export default function Page() {
             return (
               <tr key={t.id} style={{ borderBottom: "1px solid #eee" }}>
                 <td>{t.week}</td>
-                <td>{t.slug} — {t.title}</td>
+                <td>
+                  <a href={`https://github.com/yt6251-dev/tobepg-dojo/tree/main/tasks/${t.slug}`} target="_blank" rel="noreferrer">
+                    {t.slug}
+                  </a>{" "}
+                  — {t.title}
+                </td>
                 <td style={{ color, fontWeight: 600 }}>{st}</td>
                 <td>{t.ai}</td>
                 <td>{t.requires.join(", ") || "-"}</td>
