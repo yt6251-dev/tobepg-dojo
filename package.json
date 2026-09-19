@@ -1,0 +1,19 @@
+{
+  "name": "tobepg-dojo",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "grade": "node scripts/grade.mjs",
+    "test": "vitest run",
+    "test:task": "vitest run --dir tasks",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "dev": "npm run dev -w apps/dashboard",
+    "build": "npm run build -w apps/dashboard"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}
