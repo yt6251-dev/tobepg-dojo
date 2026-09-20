@@ -26,13 +26,16 @@ const statusOf = (id) => results[id]?.status ?? "open";
 const passed = (id) => statusOf(id) === "passed";
 const isOpen = (t) => t.requires.every(passed);
 
+const width = (s) => [...s].reduce((n, c) => n + (/[^\x00-\xff]/.test(c) ? 2 : 1), 0);
+const pad = (s, n) => s + " ".repeat(Math.max(0, n - width(s)));
+
 if (has("--status") || !taskArg) {
-  console.log("\n  課題            状態      週  AI    前提");
+  console.log(`\n  ${pad("課題", 26)}${pad("状態", 10)}${pad("週", 4)}${pad("AI", 6)}前提`);
   for (const t of CUR.tasks) {
     const st = passed(t.id) ? "合格" : statusOf(t.id) === "not_yet" ? "Not Yet" : isOpen(t) ? "挑戦可" : "ロック";
-    console.log(`  ${t.slug.padEnd(24)} ${st.padEnd(8)} ${String(t.week).padStart(2)}  ${t.ai.padEnd(5)} ${t.requires.join(",") || "-"}`);
+    console.log(`  ${pad(t.slug, 26)}${pad(st, 10)}${pad(String(t.week), 4)}${pad(t.ai, 6)}${t.requires.join(",") || "-"}`);
   }
-  console.log();
+  console.log("\n  練習 npm run try -- <id>   提出 npm run grade -- <id>\n");
   process.exit(0);
 }
 
@@ -47,7 +50,7 @@ if (rec.status === "not_yet" && last) {
   const waitMs = CUR.waitHoursAfterNotYet * 3600 * 1000;
   const remain = new Date(last.at).getTime() + waitMs - Date.now();
   if (remain > 0) {
-    console.log(`Not Yet の待機中。あと ${Math.ceil(remain / 3600000)} 時間。ローカルの試行は npm run test:task で`);
+    console.log(`Not Yet の待機中。あと ${Math.ceil(remain / 3600000)} 時間。練習は npm run try -- ${task.id} で`);
     process.exit(4);
   }
 }
@@ -102,6 +105,6 @@ if (ok) {
   const next = CUR.tasks.filter((t) => !passed(t.id) && t.id !== task.id && isOpen(t));
   if (next.length) console.log(`開いた課題: ${next.map((t) => t.slug).join(", ")}`);
 } else {
-  console.log(`\nNot Yet: ${task.slug}。${CUR.waitHoursAfterNotYet} 時間後に再採点できる。それまでは npm run test:task で試す`);
+  console.log(`\nNot Yet: ${task.slug}。${CUR.waitHoursAfterNotYet} 時間後に再採点できる。それまでは npm run try -- ${task.id} で練習する`);
   process.exit(1);
 }

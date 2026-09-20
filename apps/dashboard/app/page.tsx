@@ -54,7 +54,7 @@ export default function Page() {
         </tbody>
       </table>
       <p style={{ marginTop: "2rem", color: "#666" }}>
-        採点: <code>npm run grade -- &lt;id&gt;</code> / 試行: <code>npm run test:task</code>
+        練習: <code>npm run try -- &lt;id&gt;</code>（記録に残らない）　採点: <code>npm run grade -- &lt;id&gt;</code>
       </p>
     </main>
   );
