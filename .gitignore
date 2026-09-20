@@ -4,3 +4,6 @@ node_modules/
 .env.*
 *.log
 .DS_Store
+
+# 学習計画の私的メモは ../TobePG/ で管理する。誤って取り込まない
+TobePG/
