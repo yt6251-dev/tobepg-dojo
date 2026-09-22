@@ -1,19 +1,19 @@
 import { describe, it, expect, expectTypeOf } from "vitest";
 import { groupBy, pick, uniqueBy } from "./starter";
 
-type Ev = { id: string; section: "会衆" | "奉仕"; title: string };
+type Ev = { id: string; section: "開発部" | "営業部"; title: string };
 const evs: Ev[] = [
-  { id: "1", section: "会衆", title: "a" },
-  { id: "2", section: "奉仕", title: "b" },
-  { id: "3", section: "会衆", title: "c" },
+  { id: "1", section: "開発部", title: "a" },
+  { id: "2", section: "営業部", title: "b" },
+  { id: "3", section: "開発部", title: "c" },
 ];
 
 describe("groupBy", () => {
   it("キーごとに配列にまとめる", () => {
     const g = groupBy(evs, (e) => e.section);
-    expect(g["会衆"].map((e) => e.id)).toEqual(["1", "3"]);
-    expect(g["奉仕"].map((e) => e.id)).toEqual(["2"]);
-    expectTypeOf(g).toEqualTypeOf<Record<"会衆" | "奉仕", Ev[]>>();
+    expect(g["開発部"].map((e) => e.id)).toEqual(["1", "3"]);
+    expect(g["営業部"].map((e) => e.id)).toEqual(["2"]);
+    expectTypeOf(g).toEqualTypeOf<Record<"開発部" | "営業部", Ev[]>>();
   });
   it("空配列なら空オブジェクト", () => {
     expect(groupBy([] as Ev[], (e) => e.section)).toEqual({});

@@ -19,4 +19,4 @@ AI: **オフ**（`--no-ai` を付けて採点）
 
 ## なぜこれか
 
-元町Cal の `apiAuthFetchAccounts` は 配列でもオブジェクトでも返ってくる値を `Array.isArray(r) ? r : Object.values(r || {})` で受けている。この「何が来るか分からない値を安全に絞る」が narrowing。
+外部APIの戻り値は 配列のことも オブジェクトのことも null のこともある。`Array.isArray(r) ? r : Object.values(r ?? {})` のように受ける場面は日常的に出てくる。この「何が来るか分からない値を安全に絞る」が narrowing。

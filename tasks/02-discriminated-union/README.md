@@ -19,4 +19,4 @@ API の結果を `{ ok: true; data } | { ok: false; error }` で表す。`starte
 
 ## なぜこれか
 
-元町Cal の API は `{ ok: false, error: "NOT_SIGNED_IN" }` の形で断る。契約テスト `00_contract` が見ていた「応答は必ず ok を持つ」を型で保証するのがこれ。
+多くの API は `{ ok: false, error: "NOT_SIGNED_IN" }` の形で失敗を返す。契約テストで確かめる「応答は必ず `ok` を持つ」「失敗側で `data` に触れない」を **型で保証する**のがこれ。テストを書く前に コンパイラに守らせる。

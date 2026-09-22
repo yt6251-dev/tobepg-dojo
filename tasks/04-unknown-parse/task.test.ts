@@ -1,16 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { parseAccount, parseAccounts } from "./starter";
 
-const good = { id: "motomachi", email: "a@b.c", servePerms: { bokuyouView: true }, draftSections: ["s1"] };
+const good = { id: "u_admin", email: "a@b.c", permissions: { canEdit: true }, teamIds: ["t1"] };
 
 describe("parseAccount", () => {
   it("正しい形は通る", () => {
     expect(parseAccount(good)).toEqual({ ok: true, data: good });
   });
-  it("draftSections が無ければ []", () => {
-    const { draftSections, ...rest } = good;
+  it("teamIds が無ければ []", () => {
+    const { teamIds, ...rest } = good;
     const r = parseAccount(rest);
-    expect(r.ok && r.data.draftSections).toEqual([]);
+    expect(r.ok && r.data.teamIds).toEqual([]);
   });
   it.each([
     [null, "NOT_OBJECT"],
@@ -18,10 +18,10 @@ describe("parseAccount", () => {
     [{ ...good, id: "" }, "BAD_ID"],
     [{ ...good, id: 1 }, "BAD_ID"],
     [{ ...good, email: "nope" }, "BAD_EMAIL"],
-    [{ ...good, servePerms: { a: "false" } }, "BAD_PERMS"],
-    [{ ...good, servePerms: null }, "BAD_PERMS"],
-    [{ ...good, draftSections: "s1" }, "BAD_SECTIONS"],
-    [{ ...good, draftSections: [1] }, "BAD_SECTIONS"],
+    [{ ...good, permissions: { a: "false" } }, "BAD_PERMS"],
+    [{ ...good, permissions: null }, "BAD_PERMS"],
+    [{ ...good, teamIds: "s1" }, "BAD_TEAMS"],
+    [{ ...good, teamIds: [1] }, "BAD_TEAMS"],
   ])("不正 %j → %s", (input, code) => {
     const r = parseAccount(input);
     expect(r.ok).toBe(false);
