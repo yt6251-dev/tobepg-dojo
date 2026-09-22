@@ -7,3 +7,9 @@ node_modules/
 
 # 学習計画の私的メモは ../TobePG/ で管理する。誤って取り込まない
 TobePG/
+
+# TypeScript のビルド生成物
+*.js.map
+*.d.ts.map
+practice/src/*.js
+practice/src/*.d.ts
